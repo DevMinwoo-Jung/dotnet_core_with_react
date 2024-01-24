@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\정민우\\dot_net_with_react\\Restore\\API\\API.csproj": {}
+    "C:\\Users\\정민우\\dotnet_core_with_react\\API\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\정민우\\dot_net_with_react\\Restore\\API\\API.csproj": {
+    "C:\\Users\\정민우\\dotnet_core_with_react\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\정민우\\dot_net_with_react\\Restore\\API\\API.csproj",
+        "projectUniqueName": "C:\\Users\\정민우\\dotnet_core_with_react\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\정민우\\dot_net_with_react\\Restore\\API\\API.csproj",
+        "projectPath": "C:\\Users\\정민우\\dotnet_core_with_react\\API\\API.csproj",
         "packagesPath": "C:\\Users\\정민우\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\정민우\\dot_net_with_react\\Restore\\API\\obj\\",
+        "outputPath": "C:\\Users\\정민우\\dotnet_core_with_react\\API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -46,6 +46,24 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite.Core": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "SQLite": {
+              "target": "Package",
+              "version": "[3.13.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"
