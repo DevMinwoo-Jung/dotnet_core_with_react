@@ -8,3 +8,11 @@ export interface Product {
   brand: string,
   quantityInStock?: number
 }
+
+export interface ProductProps {
+  products: Product[],
+}
+
+export type SingleProduct = {
+  product: Product
+}
