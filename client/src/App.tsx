@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const dummy = [
   { name: '물건1', price: 100.00},
@@ -7,6 +7,12 @@ const dummy = [
 
 function App() {
   const [products, setProducts] = useState([...dummy]);
+
+  useEffect(()=> {
+    fetch(`http://localhost:5252/api/Products`)
+    .then(response => response.json())
+    .then(result => setProducts(result))
+  }, []) // 빈 배열은 한번만 실행한다는 거였지
 
   function addProducts(){
     setProducts(prevState => [...prevState, {
