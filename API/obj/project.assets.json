@@ -2993,25 +2993,34 @@
     ]
   },
   "packageFolders": {
-    "/Users/devminwoojung/.nuget/packages/": {}
+    "C:\\Users\\정민우\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/devminwoojung/Desktop/minwoo projects/jquery to react/dotnet_core_with_react/API/API.csproj",
+      "projectUniqueName": "C:\\Users\\정민우\\dotnet_core_with_react\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "/Users/devminwoojung/Desktop/minwoo projects/jquery to react/dotnet_core_with_react/API/API.csproj",
-      "packagesPath": "/Users/devminwoojung/.nuget/packages/",
-      "outputPath": "/Users/devminwoojung/Desktop/minwoo projects/jquery to react/dotnet_core_with_react/API/obj/",
+      "projectPath": "C:\\Users\\정민우\\dotnet_core_with_react\\API\\API.csproj",
+      "packagesPath": "C:\\Users\\정민우\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\정민우\\dotnet_core_with_react\\API\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/devminwoojung/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\정민우\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "https://api.nuget.org/v3/index.json": {}
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
+        "https://api.nuget.org/v3/index.json": {},
+        "https://nuget.ableintra.net:5000/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
@@ -3071,7 +3080,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

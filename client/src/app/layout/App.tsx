@@ -1,7 +1,7 @@
 import { Container, CssBaseline, ThemeProvider, createTheme } from "@mui/material";
-import Catalog from "../../features/catalog/Catalog";
 import Header from "./Header";
 import { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 
 function App() {
 
@@ -27,7 +27,8 @@ function App() {
       <CssBaseline/>
       <Header setTheme={changeTheme}/>
       <Container>
-        <Catalog/>      
+        <Outlet/>
+        {/* path '/' 밑에 있는 애들이 rendering된다  */}
       </Container>
     </ThemeProvider>
   )
