@@ -23,7 +23,7 @@ export default function ProductDetail(){
         // .finally(() => setLoading(false))
 
         id && agent.Catalog.details(parseInt(id))
-        .then(res => setProduct(res.data))
+        .then(res => setProduct(res))
         .catch(err => console.error(err))
         .finally(() => setLoading(false))
         
