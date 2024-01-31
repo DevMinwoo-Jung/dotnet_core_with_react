@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Product } from "../../app/models/product";
 import Loading from "../../app/components/LoadingSpinner";
 import agent from "../../app/api/agent";
+import NotFound from "../../app/errors/Notfound";
 
 export default function ProductDetail(){
     
@@ -31,7 +32,7 @@ export default function ProductDetail(){
 
     if (loading) return <Loading/>
 
-    if (!product) return <h3>Not Found</h3>
+    if (!product) return <NotFound/>
 
     const { brand, description, name, pictureUrl, price, quantityInStock, type } = product;
 
