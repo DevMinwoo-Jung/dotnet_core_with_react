@@ -11,18 +11,31 @@ axios.interceptors.response.use(response => {
 }, (error: AxiosError) => {
   const {data, status} = error.response as AxiosResponse;
   switch (status) {
-    case 400:
-      toast.error(data.title);
-      break;
-    case 401:
-      toast.error(data.title);
-      break;
-    case 500:
-      toast.error(data.title);
-      break;
-    default:
-      break;      
+      case 400:
+          if (data.errors) {
+              const modelStateErrors: string[] = [];
+              for (const key in data.errors) {
+                  if (data.errors[key]) {
+                      modelStateErrors.push(data.errors[key])
+                  }
+              }
+              throw modelStateErrors.flat();
+          }
+          toast.error(data.title);
+          break;
+      case 401:
+          toast.error(data.title);
+          break;
+      case 403:
+          toast.error('You are not allowed to do that!');
+          break;
+      case 500:
+          toast.error('/server-error')
+          break;
+      default:
+          break;
   }
+  return Promise.reject(error.response);
   return Promise.reject(error.response);
 })
 

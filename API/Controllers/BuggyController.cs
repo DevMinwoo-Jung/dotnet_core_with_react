@@ -31,6 +31,8 @@ namespace API.Controllers
     public ActionResult GetValidationError()
     {
       ModelState.AddModelError("Problem1", "This is thre first error");
+      ModelState.AddModelError("Problem2", "This is thre second error");
+      ModelState.AddModelError("Problem3", "This is thre third error");
       return ValidationProblem();
     }
 
