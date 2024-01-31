@@ -1,8 +1,17 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 axios.defaults.baseURL = 'http://localhost:5252/api/';
 
 const responseBdoy = (response: AxiosResponse) => response.data;
+
+// unfufilled일 때 desc 출력
+axios.interceptors.response.use(response => {
+  return response;
+}, (error: AxiosError) => {
+  console.log(error);
+  console.log('Error Intercepting');
+  return Promise.reject(error.response);
+})
 
 const requests = {
   get: (url: string) => axios.get(url).then(responseBdoy),
