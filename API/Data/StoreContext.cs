@@ -12,5 +12,7 @@ namespace API.Data
 
         public DbSet<Product> Products { get; set; } // db table처럼 접근 가능함
 
+        public DbSet<Basket> Baskets {get; set; }
+
     }
 }
