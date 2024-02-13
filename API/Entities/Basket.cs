@@ -1,3 +1,4 @@
+
 namespace API.Entities;
 
 public class Basket
@@ -25,4 +26,9 @@ public class Basket
         item.Quantity -= quantity;
         if (item.Quantity == 0) Items.Remove(item);
     }
+
+  public static implicit operator int(Basket? v)
+  {
+    throw new NotImplementedException();
+  }
 }

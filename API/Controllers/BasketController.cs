@@ -21,26 +21,13 @@ namespace API.Controllers
 
       if (basket == null) return NotFound();
 
-      return new BasketDto
-      {
-        Id = basket.Id,
-        BuyerId = basket.BuyerId,
-        Items = basket.Items.Select(item => new BasketItemDto
-        {
-          ProductId = item.ProductId,
-          Name = item.Product.Name,
-          Price = item.Product.Price,
-          PictureUrl = item.Product.PictureUrl,
-          Type = item.Product.Type,
-          Brand = item.Product.Brand,
-          Quantity = item.Quantity
-        }).ToList()
-      };
+      return MapBasketToDto(basket);
     }
 
 
+
     [HttpPost] // api/basket?productId=3&quantity=2
-    public async Task<ActionResult> AddItemToBasket(int productId, int quantity)
+    public async Task<ActionResult<BasketDto>> AddItemToBasket(int productId, int quantity)
     {
       // get basket || // create basket
 
@@ -58,7 +45,7 @@ namespace API.Controllers
       // save changes
       var result = await _context.SaveChangesAsync() > 0; // 0보다 작으면 문제가 있는거임
 
-      if(result) return StatusCode(201);
+      if(result) return CreatedAtRoute("GetBasket", MapBasketToDto(basket));
 
       // 위 조건에 안걸리면 밑에꺼 실행
       return BadRequest(new ProblemDetails{Title = "Problem occured"});
@@ -69,7 +56,7 @@ namespace API.Controllers
     [HttpDelete]
     public async Task<ActionResult> RemoveBasketItem(int productId, int quantity)
     {
-      // get basket
+
       var basket = await RetrieveBasket();
 
       if (basket == null)
@@ -78,9 +65,6 @@ namespace API.Controllers
       }
 
       basket.RemoveItem(productId, quantity);
-
-      // remove item or reduce quantity
-      // save changes
 
       var result = await _context.SaveChangesAsync() > 0 ;
 
@@ -94,12 +78,12 @@ namespace API.Controllers
     }
 
 
-    private async Task<Basket?> RetrieveBasket()
+    private async Task<Basket> RetrieveBasket()
     {
       return await _context.Baskets
         .Include(i => i.Items)
         .ThenInclude(p => p.Product)
-        .FirstOrDefaultAsync(x => x.BuyerId == Request.Cookies["buyerId"]);
+        .FirstOrDefaultAsync(x => x.BuyerId.ToLower() == Request.Cookies["buyerId"]);
     }
 
     private Basket CreateBasket()
@@ -117,5 +101,23 @@ namespace API.Controllers
       return basket;
     }
 
+    private BasketDto MapBasketToDto(Basket basket)
+    {
+      return new BasketDto
+      {
+        Id = basket.Id,
+        BuyerId = basket.BuyerId,
+        Items = basket.Items.Select(item => new BasketItemDto
+        {
+          ProductId = item.ProductId,
+          Name = item.Product.Name,
+          Price = item.Product.Price,
+          PictureUrl = item.Product.PictureUrl,
+          Brand = item.Product.Brand,
+          Type = item.Product.Type,
+          Quantity = item.Quantity
+        }).ToList()
+      };
+    }
   }
 }
