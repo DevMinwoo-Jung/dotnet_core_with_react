@@ -14,7 +14,7 @@ namespace API.Controllers
       _context = context;
     }
 
-    [HttpGet]
+    [HttpGet(Name = "GetBasket")]
     public async Task<ActionResult<BasketDto>> GetBasket()
     {
       var basket = await RetrieveBasket();
@@ -46,7 +46,7 @@ namespace API.Controllers
 
       var basket = await RetrieveBasket();
 
-      if(basket == null) basket = CreateBasket();
+      if (basket == null) basket = CreateBasket();
 
       // get product
       var product = await _context.Products.FindAsync(productId);
@@ -70,9 +70,27 @@ namespace API.Controllers
     public async Task<ActionResult> RemoveBasketItem(int productId, int quantity)
     {
       // get basket
+      var basket = await RetrieveBasket();
+
+      if (basket == null)
+      {
+        return NotFound();
+      }
+
+      basket.RemoveItem(productId, quantity);
+
       // remove item or reduce quantity
       // save changes
-      return Ok();
+
+      var result = await _context.SaveChangesAsync() > 0 ;
+
+      if (result)
+      {
+        return Ok();
+      } 
+
+      return BadRequest(new ProblemDetails{Title = "Problem removing item from the basket"});
+
     }
 
 
