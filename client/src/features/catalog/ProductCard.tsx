@@ -3,7 +3,8 @@ import { SingleProduct } from "../../app/models/product";
 import { Link } from 'react-router-dom'
 import { useState } from "react";
 import agent from "../../app/api/agent";
-import LoadingButton from "@material-ui/lab/LoadingButton";
+import { LoadingButton } from "@mui/lab";
+
 
 export default function ProductCard({product}:SingleProduct) {
 

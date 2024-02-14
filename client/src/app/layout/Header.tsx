@@ -1,6 +1,6 @@
 import { AppBar, Badge, Box, IconButton, List, ListItem, Toolbar, Typography } from '@mui/material'
 import CustomizedSwitches from '../components/ThemeBtn'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { ShoppingCart } from '@mui/icons-material'
 
 const midLinks = [
@@ -53,7 +53,7 @@ export default function Header({setTheme}:HeaderType) {
           </List>
 
         <Box display='flex' alignItems='center'>
-          <IconButton size='large' edge='start' color='inherit'             
+          <IconButton component={Link} to='/basket' size='large' edge='start' color='inherit'             
               sx={navStyle}>
               <Badge badgeContent='4' color='secondary'>
                   <ShoppingCart/>
