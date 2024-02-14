@@ -1,10 +1,24 @@
 import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
 import { SingleProduct } from "../../app/models/product";
 import { Link } from 'react-router-dom'
+import { useState } from "react";
+import agent from "../../app/api/agent";
+import LoadingButton from "@material-ui/lab/LoadingButton";
 
 export default function ProductCard({product}:SingleProduct) {
 
   const { name ,pictureUrl, price, brand } = product
+
+  const [loading, setLoading] = useState(false);
+
+  function handleAddItem(productId: number) {
+    
+    setLoading(true);
+
+    agent.Basket.addItem(productId)
+      .catch(err => console.log(err))
+      .finally(()=> setLoading(false))
+  }
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -36,7 +50,7 @@ export default function ProductCard({product}:SingleProduct) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
+        <LoadingButton loading={loading} size="small" onClick={()=> handleAddItem(product.id)}>Share</LoadingButton>
         <Button size="small" component={Link} to={`/catalog/${product.id}`}>View</Button>
       </CardActions>
     </Card>

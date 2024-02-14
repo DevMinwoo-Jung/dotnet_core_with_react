@@ -4,8 +4,9 @@ import { useParams } from 'react-router-dom';
 import { Product } from "../../app/models/product";
 
 import agent from "../../app/api/agent";
-import NotFound from "../../app/errors/Notfound";
+
 import Loading from "../../app/layout/Loading";
+import NotFound from "../../app/errors/NotFound";
 
 export default function ProductDetail(){
     
