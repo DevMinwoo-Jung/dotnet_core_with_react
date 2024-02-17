@@ -7,8 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Controllers
 {
   public class BasketController: BaseApiController
-  {
-    private readonly StoreContext _context;
+  {    private readonly StoreContext _context;
     public BasketController(StoreContext context)
     {
         _context = context;
@@ -18,7 +17,6 @@ namespace API.Controllers
     public async Task<ActionResult<BasketDto>> GetBasket()
     {
         var basket = await RetrieveBasket();
-        Console.WriteLine(basket);
 
         if (basket == null) return NotFound();
 
