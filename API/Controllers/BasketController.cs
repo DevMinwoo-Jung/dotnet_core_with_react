@@ -11,17 +11,18 @@ namespace API.Controllers
     private readonly StoreContext _context;
     public BasketController(StoreContext context)
     {
-      _context = context;
+        _context = context;
     }
 
     [HttpGet(Name = "GetBasket")]
     public async Task<ActionResult<BasketDto>> GetBasket()
     {
-      var basket = await RetrieveBasket();
+        var basket = await RetrieveBasket();
+        Console.WriteLine(basket);
 
-      if (basket == null) return NotFound();
+        if (basket == null) return NotFound();
 
-      return MapBasketToDto(basket);
+        return MapBasketToDto(basket);
     }
 
 
@@ -59,11 +60,8 @@ namespace API.Controllers
 
       var basket = await RetrieveBasket();
 
-      if (basket == null)
-      {
-        return NotFound();
-      }
-
+      if (basket == null) return NotFound();
+    
       basket.RemoveItem(productId, quantity);
 
       var result = await _context.SaveChangesAsync() > 0 ;
@@ -83,7 +81,7 @@ namespace API.Controllers
       return await _context.Baskets
         .Include(i => i.Items)
         .ThenInclude(p => p.Product)
-        .FirstOrDefaultAsync(x => x.BuyerId.ToLower() == Request.Cookies["buyerId"]);
+        .FirstOrDefaultAsync(x => x.BuyerId == Request.Cookies["buyerId"]);
     }
 
     private Basket CreateBasket()
