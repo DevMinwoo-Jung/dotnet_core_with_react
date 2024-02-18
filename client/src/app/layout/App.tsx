@@ -4,8 +4,27 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { useStoreContext } from "../context/StoreContext";
+import agent from "../api/agent";
+import { getCookie } from "../utils/utisl";
+import Loading from "./Loading";
 
 function App() {
+  const {setBasket} = useStoreContext();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(()=> {
+    const buyerId = getCookie('buyerId');
+
+    if (buyerId) {
+      agent.Basket.get()
+        .then((basket => setBasket(basket)))
+        .catch(err => console.error(err))
+        .finally(() => setLoading(false))
+    }
+
+  }, [setBasket])
+
 
   const [darkMode, setDarkMode] = useState(false);
   const paletteType = darkMode ? 'dark': 'light';
@@ -23,6 +42,11 @@ function App() {
   useEffect(()=> {
     setDarkMode(darkMode);
   }, [darkMode])
+
+  if (loading) {
+    return <Loading message={"initialize App..."}/>
+  } 
+    
 
   return (
     <ThemeProvider theme={theme} >
