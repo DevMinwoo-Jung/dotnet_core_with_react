@@ -81,7 +81,7 @@ export default function Basket() {
                   <LoadingButton 
                       loading={status.loading && status.name === 'rem' + item.productId} 
                       color="error" 
-                      onClick={() => handleRemoveItem(item.productId, 1, 'rem')}
+                      onClick={() => handleRemoveItem(item.productId, 1, 'rem' + item.productId)}
                       
                       >
                       <Remove/>
@@ -90,7 +90,7 @@ export default function Basket() {
                   <LoadingButton 
                       loading={status.loading && status.name === 'add' + item.productId}
                       color="secondary" 
-                      onClick={() => handleAddItem(item.productId, 'add')}>
+                      onClick={() => handleAddItem(item.productId, 'add' + item.productId)}>
                       <Add/>
                   </LoadingButton>
                   </TableCell>
@@ -99,7 +99,7 @@ export default function Basket() {
                 <LoadingButton 
                       loading={status.loading && status.name === 'delete' + item.productId} 
                     color="error" 
-                    onClick={() => handleRemoveItem(item.productId, item.quantity, 'delete')}>
+                    onClick={() => handleRemoveItem(item.productId, item.quantity, 'delete' + item.productId)}>
                     <Delete/>
                 </LoadingButton>
                 </TableCell>
