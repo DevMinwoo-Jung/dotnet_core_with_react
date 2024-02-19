@@ -1,5 +1,5 @@
 import { Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import { Product } from "../../app/models/product";
 
@@ -12,7 +12,7 @@ import { LoadingButton } from "@mui/lab";
 
 export default function ProductDetail(){
     
-    const {basket} = useStoreContext();
+    const {basket, setBasket, removeItem} = useStoreContext();
     const { id } = useParams<{id: string}>();
     const [product, setProduct] = useState<Product | null>();
     const [loading, setLoading] = useState(true);
@@ -20,6 +20,38 @@ export default function ProductDetail(){
     const [submitting, setSubmitting] = useState(false);
     const item = basket?.items.find(i => i.productId === product?.id);
 
+    function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
+        
+        if(parseInt(event.currentTarget.value) < 1) {
+            return;
+        }
+
+        setQuantity(parseInt(event.currentTarget.value));
+    }
+
+    function handleUpdateCart(){
+        const prevQuantity = basket?.items.find(i => i.productId === product?.id)?.quantity;
+        if(quantity === prevQuantity) {
+            return;
+        }
+
+        if(!product) return;
+
+        setSubmitting(true);
+        if(!item || quantity > item.quantity){
+            const updateedQuantity = item ? quantity - item.quantity : quantity;
+            agent.Basket.addItem(product.id, updateedQuantity)
+            .then(basket => setBasket(basket))
+            .catch(err => console.error(err))
+            .finally(() => setSubmitting(false));
+        } else {
+            const updateQuantity = item.quantity - quantity;
+            agent.Basket.removeItem(product?.id, updateQuantity)
+            .then(() => removeItem(product?.id, updateQuantity))
+            .catch(err => console.log(err))
+            .finally(() => setSubmitting(false))
+        }
+    }
 
     useEffect(()=> {
         // axios.get(`http://localhost:5252/api/products/${id}`).then((response)=> {
@@ -88,6 +120,7 @@ export default function ProductDetail(){
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <TextField
+                                onChange={handleInputChange}
                                 variant="outlined"
                                 type='number'
                                 label='Quantity in Cart'
@@ -97,6 +130,9 @@ export default function ProductDetail(){
                         </Grid>
                         <Grid item xs={6}>
                             <LoadingButton
+                                disabled={item?.quantity === quantity || !item && quantity === 0}
+                                loading={submitting}
+                                onClick={handleUpdateCart}
                                 sx={{height: '55px'}}
                                 color='primary'
                                 size='large'
