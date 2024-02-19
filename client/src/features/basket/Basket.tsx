@@ -76,7 +76,7 @@ export default function Basket() {
                     <span>{item.name}</span>
                   </Box>
                 </TableCell>
-                <TableCell align="right">{(item.price / 100).toFixed(2)}원</TableCell>
+                <TableCell align="right">${(item.price / 100).toFixed(2)}</TableCell>
                 <TableCell align="center">
                   <LoadingButton 
                       loading={status.loading && status.name === 'rem' + item.productId} 

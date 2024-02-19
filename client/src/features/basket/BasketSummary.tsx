@@ -1,14 +1,13 @@
 import { TableContainer, Paper, Table, TableBody, TableRow, TableCell } from "@mui/material";
 import { useStoreContext } from "../../app/context/StoreContext";
+import { currencyFormat } from "../../app/utils/utisl";
 
 export default function BasketSummary() {
   const {basket} = useStoreContext();
   
-  const subtotal:number =  Number(basket?.items.reduce((sum, item) => sum + item.price, 0));
-
-  //   const itemCount =itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0
+  const subtotal:number =  Number(basket?.items.reduce((sum, item) => (sum + item.quantity * item.price), 0) ?? 0);
   
-  const deliveryFee = subtotal < 9999 ? 3000 : 0;
+  const deliveryFee = subtotal < 99999 ? 3000 : 0;
 
 
     return (
@@ -18,15 +17,15 @@ export default function BasketSummary() {
                     <TableBody>
                         <TableRow>
                             <TableCell colSpan={2}>Subtotal</TableCell>
-                            <TableCell align="right">{subtotal}</TableCell>
+                            <TableCell align="right">{currencyFormat(subtotal)}</TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell colSpan={2}>Delivery fee*</TableCell>
-                            <TableCell align="right">{deliveryFee}</TableCell>
+                            <TableCell align="right">{currencyFormat(deliveryFee)}</TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell colSpan={2}>Total</TableCell>
-                            <TableCell align="right">{subtotal + deliveryFee}</TableCell>
+                            <TableCell align="right">{currencyFormat(subtotal + deliveryFee)}</TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell>

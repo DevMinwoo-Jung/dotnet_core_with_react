@@ -82,7 +82,7 @@ namespace API.Controllers
         .FirstOrDefaultAsync(x => x.BuyerId == Request.Cookies["buyerId"]);
     }
 
-    private Basket CreateBasket() 
+    private Basket CreateBasket()
     {
       var buyerId = Guid.NewGuid().ToString();
       if (string.IsNullOrEmpty(buyerId))
