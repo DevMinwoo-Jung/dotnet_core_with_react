@@ -2,7 +2,7 @@
 // import agent from "../../app/api/agent";
 // import Loading from "../../app/layout/Loading";
 import { Basket } from "../../app/models/basket";
-import { Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Button, Grid, Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { Add, Delete, Remove } from "@mui/icons-material";
 import { useStoreContext } from "../../app/context/StoreContext";
 import { useState } from "react";
@@ -112,6 +112,15 @@ export default function Basket() {
         <Grid item xs={6}/>
         <Grid item xs={6}>
           <BasketSummary/>
+          <Button
+            component={Link}
+            to='/checkout'
+            variant='contained'
+            size='large'
+            fullWidth
+          >
+            checkout
+          </Button>
         </Grid>
       </Grid>
     </>

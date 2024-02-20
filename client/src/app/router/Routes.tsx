@@ -7,6 +7,7 @@ import Catalog from "../../features/catalog/Catalog";
 import Contact from "../../features/contact/Contact";
 import ServerError from "../errors/ServerError";
 import Basket from "../../features/basket/Basket";
+import Checkout from "../../features/checkout/Checkout";
 
 export const router = createBrowserRouter([
     {
@@ -36,6 +37,9 @@ export const router = createBrowserRouter([
             },
             {
                 path: '*', element: <Navigate replace to="/not-found"/>
+            },
+            {
+                path: 'checkout', element: <Checkout/>
             }
         ]
     }
