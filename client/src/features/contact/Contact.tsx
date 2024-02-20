@@ -1,10 +1,11 @@
 import { Button, ButtonGroup, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { CounterState, DECREMENT_COUNTER, INCREMENT_COUNTER } from "./counterReducer";
+import { CounterState, decrement, increment } from "./counterReducer";
 
 export default function Contact() {
     const dispatch = useDispatch();
-    const { data, title } = useSelector((state: CounterState) => state);
+    const data = useSelector((state: CounterState) => state.data);
+    const title = useSelector((state: CounterState) => state.title);
 
     return (
         <Typography variant="h2">
@@ -12,8 +13,9 @@ export default function Contact() {
             {data}
             {title}
             <ButtonGroup>
-                <Button onClick={()=> dispatch({type: DECREMENT_COUNTER})} variant="contained">어려지기</Button>
-                <Button onClick={()=> dispatch({type: INCREMENT_COUNTER})} variant="contained">나이먹기</Button>
+                <Button onClick={()=> dispatch(decrement())} variant="contained">어려지기</Button>
+                <Button onClick={()=> dispatch(increment())} variant="contained">나이먹기</Button>
+                <Button onClick={()=> dispatch(increment(5))} variant="contained">5살 먹기</Button>
             </ButtonGroup>
         </Typography>
     )
