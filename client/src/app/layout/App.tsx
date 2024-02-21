@@ -4,13 +4,16 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { useStoreContext } from "../context/StoreContext";
+// import { useStoreContext } from "../context/StoreContext";
 import agent from "../api/agent";
 import { getCookie } from "../utils/utisl";
 import Loading from "./Loading";
+import { useAppDispatch } from "../store/configureStore";
+import { setBasket } from "../../features/basket/basketSlice";
 
 function App() {
-  const {setBasket} = useStoreContext();
+  //const {setBasket} = useStoreContext();
+  const dispath = useAppDispatch();
   const [loading, setLoading] = useState(true);
 
   useEffect(()=> {
@@ -18,12 +21,12 @@ function App() {
 
     if (buyerId) {
       agent.Basket.get()
-        .then((basket => setBasket(basket)))
+        .then((basket => dispath(setBasket(basket))))
         .catch(err => console.error(err))
         .finally(() => setLoading(false))
     }
 
-  }, [setBasket])
+  }, [dispath])
 
 
   const [darkMode, setDarkMode] = useState(false);
