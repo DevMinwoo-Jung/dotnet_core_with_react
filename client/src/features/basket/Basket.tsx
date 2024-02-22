@@ -4,11 +4,13 @@
 import { Basket } from "../../app/models/basket";
 import { Box, Button, Grid, Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { Add, Delete, Remove } from "@mui/icons-material";
-import { useStoreContext } from "../../app/context/StoreContext";
 import { useState } from "react";
 import agent from "../../app/api/agent";
 import { LoadingButton } from "@mui/lab";
 import BasketSummary from "./BasketSummary";
+import { useAppSelector } from "../../app/store/configureStore";
+import { useDispatch } from "react-redux";
+import { removeItem, setBasket } from "./basketSlice";
 
 export default function Basket() {
 
@@ -23,7 +25,8 @@ export default function Basket() {
   // }, [])
   // if(loading) return <Loading message="loading basket..."/>
 
-  const {basket, setBasket, removeItem} = useStoreContext();
+  const { basket } = useAppSelector(state => state.basket);
+  const disaptch = useDispatch();
   const [status, setStatus] = useState({
     loading: false,
     name: ''
@@ -34,7 +37,7 @@ export default function Basket() {
   function handleAddItem(productId: number, name: string){
     setStatus({loading: true, name});
     agent.Basket.addItem(productId)
-      .then(basket => setBasket(basket))
+      .then(basket => disaptch(setBasket(basket)))
       .catch(err => console.error(err))
       .finally(()=> setStatus({loading: false, name: ''}))
   }
@@ -42,7 +45,7 @@ export default function Basket() {
   function handleRemoveItem(productId: number, quantity: number = 1, name: string){
     setStatus({loading: true, name});
     agent.Basket.removeItem(productId, quantity)
-      .then(()=> removeItem(productId, quantity))
+      .then(()=> disaptch(removeItem({productId, quantity})))
       .catch(err => console.error(err))
       .finally(()=> setStatus({loading: false, name: ''}))
   }
