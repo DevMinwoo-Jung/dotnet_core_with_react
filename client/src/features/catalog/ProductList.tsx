@@ -8,8 +8,8 @@ export default function ProductList({products}:ProductProps) {
     {
       products.map((item)=>{
         return (
-          <Grid item xs={4}>
-            <ProductCard product={item} key={item.id}/>
+          <Grid item xs={4} key={item.id}>
+            <ProductCard product={item}/>
           </Grid>
         )
       })
