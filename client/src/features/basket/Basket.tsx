@@ -79,14 +79,14 @@ export default function Basket() {
                 <TableCell align="right">${(item.price / 100).toFixed(2)}</TableCell>
                 <TableCell align="center">
                   <LoadingButton 
-                      loading={status.includes('pendingRemovingItem' + item.productId)} 
+                      loading={status === 'pendingRemovingItem' + item.productId + 'rem'} 
                       color="error" 
-                      onClick={() => disaptch(removeBasketItemAsync({productId: item.productId}))}>
+                      onClick={() => disaptch(removeBasketItemAsync({productId: item.productId, quantity: 1, name: 'rem'}))}>
                       <Remove/>
                   </LoadingButton>
                   {item.quantity}
                   <LoadingButton 
-                      loading={status.includes('pendingAddItem' + item.productId)} 
+                      loading={status === 'pendingAddItem' + item.productId} 
                       color="secondary" 
                       onClick={() => disaptch(addBasketItemAsync({productId: item.productId}))}>
                       <Add/>
@@ -95,9 +95,11 @@ export default function Basket() {
                 <TableCell align="right">{item.price * item.quantity}</TableCell>
                 <TableCell align="right">
                 <LoadingButton 
-                      loading={status.includes('pendingRemovingItem' + item.productId)} 
+                      loading={status === 'pendingRemovingItem' + item.productId + 'del'} 
                       color="error" 
-                      onClick={() => disaptch(removeBasketItemAsync({productId: item.productId, quantity: item.quantity}))}>
+                      onClick={() => disaptch(
+                        removeBasketItemAsync({productId: item.productId, quantity: item.quantity, name: 'del'}
+                      ))}>
                     <Delete/>
                 </LoadingButton>
                 </TableCell>
@@ -115,8 +117,7 @@ export default function Basket() {
             to='/checkout'
             variant='contained'
             size='large'
-            fullWidth
-          >
+            fullWidth>
             checkout
           </Button>
         </Grid>

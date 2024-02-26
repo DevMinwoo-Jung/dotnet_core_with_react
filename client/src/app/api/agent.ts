@@ -7,12 +7,12 @@ axios.defaults.withCredentials = true;
 
 const responseBdoy = (response: AxiosResponse) => response.data;
 
-const sleep = () => new Promise(resolve => setTimeout(resolve, 1000));
+// const sleep = () => new Promise(resolve => setTimeout(resolve, 1000));
 
 
 // unfufilled일 때 desc 출력
 axios.interceptors.response.use(async response => {
-    await sleep();
+    // await sleep();
     return response
 }, (error: AxiosError) => {
     const {data, status} = error.response as AxiosResponse;
