@@ -1,24 +1,21 @@
 import { Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
-import { Product } from "../../app/models/product";
-
-import agent from "../../app/api/agent";
-
 import Loading from "../../app/layout/Loading";
 import NotFound from "../../app/errors/NotFound";
 import { LoadingButton } from "@mui/lab";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { addBasketItemAsync, removeBasketItemAsync } from "../basket/basketSlice";
+import { fetchProductAsync, productSelectors } from "./catalogtSlice";
 
 export default function ProductDetail(){
     
     const {basket, status} = useAppSelector(state => state.basket);
     const disaptch = useAppDispatch();
-
     const { id } = useParams<{id: string}>();
-    const [product, setProduct] = useState<Product | null>();
-    const [loading, setLoading] = useState(true);
+    const product = useAppSelector(state => productSelectors.selectById(state, id));
+    //const [product, setProduct] = useState<Product | null>();
+    const { status: productStatus } = useAppSelector(state => state.catalog);
     const [quantity, setQuantity] = useState(0);
     const [submitting, setSubmitting] = useState(false);
     const item = basket?.items.find(i => i.productId === product?.id);
@@ -72,15 +69,12 @@ export default function ProductDetail(){
         if(item) {
             setQuantity(item.quantity);
         }
+        if(!product) {
+            disaptch(fetchProductAsync(parseInt(id!)));
+        }
+    }, [id, item, disaptch, product])
 
-        id && agent.Catalog.details(parseInt(id))
-        .then(res => setProduct(res))
-        .catch(err => console.error(err))
-        .finally(() => setLoading(false))
-        
-    }, [id, item])
-
-    if (loading) return <Loading message="Loading Product"/>
+    if (productStatus.includes('pending')) return <Loading message="Loading Product"/>
 
     if (!product) return <NotFound/>
 

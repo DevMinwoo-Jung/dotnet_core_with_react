@@ -1,6 +1,8 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 import { Product } from "../../app/models/product";
 import agent from "../../app/api/agent";
+import { RootState } from "../../app/store/configureStore";
+
 
 const productsAdapter = createEntityAdapter<Product>();
 
@@ -14,6 +16,18 @@ export const fetchProductsAsync = createAsyncThunk<Product[]>(
     }
   }
 )
+
+export const fetchProductAsync = createAsyncThunk<Product, number>(
+  'catalog/fetch{roductsAsync',
+  async(productId) => {
+    try {
+      return await agent.Catalog.details(productId);
+    } catch (err){
+      console.error(err)
+    }
+  }
+)
+
 
 export const catalogSlice = createSlice({
   name: 'catalog',
@@ -36,3 +50,5 @@ export const catalogSlice = createSlice({
     });
   })
 });
+
+export const productSelectors = productsAdapter.getSelectors((state: RootState) => state.catalog)
