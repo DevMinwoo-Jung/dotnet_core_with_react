@@ -12,7 +12,7 @@ export default function ProductDetail(){
     
     const {basket, status} = useAppSelector(state => state.basket);
     const disaptch = useAppDispatch();
-    const { id } = useParams<{id: string}>();
+    const { id } = useParams<{id: any}>();
     const product = useAppSelector(state => productSelectors.selectById(state, id));
     //const [product, setProduct] = useState<Product | null>();
     const { status: productStatus } = useAppSelector(state => state.catalog);
@@ -130,7 +130,7 @@ export default function ProductDetail(){
                         <Grid item xs={6}>
                             <LoadingButton
                                 disabled={item?.quantity === quantity || !item && quantity === 0}
-                                loading={status.includes('pending' + item?.productId)}
+                                loading={status.includes('pending')}
                                 onClick={handleUpdateCart}
                                 sx={{height: '55px'}}
                                 color='primary'

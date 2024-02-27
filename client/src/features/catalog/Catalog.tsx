@@ -1,8 +1,7 @@
-import agent from "../../app/api/agent";
 import Loading from "../../app/layout/Loading";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import ProductList from "./ProductList"
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { fetchProductsAsync, productSelectors } from "./catalogtSlice";
 
 
