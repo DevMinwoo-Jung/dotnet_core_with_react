@@ -28,6 +28,16 @@ export const fetchProductAsync = createAsyncThunk<Product, number>(
   }
 )
 
+export const fetchFilters = createAsyncThunk(
+  'catalog/fetchFilters',
+  async (_, thunkAPI) => {
+      try {
+          return agent.Catalog.fetchFilters();
+      } catch (error: any) {
+          return thunkAPI.rejectWithValue({ error: error.message })
+      }
+  }
+)
 
 export const catalogSlice = createSlice({
   name: 'catalog',
