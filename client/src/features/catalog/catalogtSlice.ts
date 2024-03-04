@@ -43,7 +43,10 @@ export const catalogSlice = createSlice({
   name: 'catalog',
   initialState: productsAdapter.getInitialState({
     productsLoaded: false,
-    status: 'idle'
+    filtersLoaded: false,
+    status: 'idle',
+    brands: [],
+    types: [],
   }),
   reducers: {},
   extraReducers: (builder => {
@@ -70,6 +73,18 @@ export const catalogSlice = createSlice({
         console.log(action);
         state.status = 'idle'
     });
+    builder.addCase(fetchFilters.pending, (state) => {
+      state.status = 'pendingFetchFilters';
+  });
+  builder.addCase(fetchFilters.fulfilled, (state, action) => {
+      state.brands = action.payload.brands;
+      state.types = action.payload.types;
+      state.status = 'idle';
+      state.filtersLoaded = true;
+  });
+  builder.addCase(fetchFilters.rejected, (state) => {
+      state.status = 'idle';
+  });
   })
 });
 
