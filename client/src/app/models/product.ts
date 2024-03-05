@@ -16,3 +16,12 @@ export interface ProductProps {
 export type SingleProduct = {
   product: Product
 }
+
+export interface ProductParams {
+  orderBy: string;
+  searchTerm?: string;
+  types: string[];
+  brands: string[];
+  pageNumber: number;
+  pageSize: number;
+}

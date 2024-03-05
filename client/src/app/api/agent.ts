@@ -5,7 +5,7 @@ import { router } from "../router/Routes";
 axios.defaults.baseURL = 'http://localhost:5252/api/';
 axios.defaults.withCredentials = true;
 
-const responseBdoy = (response: AxiosResponse) => response.data;
+const responseBody = (response: AxiosResponse) => response.data;
 
 // const sleep = () => new Promise(resolve => setTimeout(resolve, 1000));
 
@@ -45,16 +45,22 @@ axios.interceptors.response.use(async response => {
 })
 
 const requests = {
-  get: (url: string) => axios.get(url).then(responseBdoy),
-  post: (url: string, body: object) => axios.post(url, body).then(responseBdoy),
-  put: (url: string,  body: object) => axios.put(url, body).then(responseBdoy),
-  delete: (url: string) => axios.delete(url).then(responseBdoy),
+    get: (url: string, params?: URLSearchParams) => axios.get(url, {params}).then(responseBody),
+    post: (url: string, body: object) => axios.post(url, body).then(responseBody),
+    put: (url: string, body: object) => axios.put(url, body).then(responseBody),
+    del: (url: string) => axios.delete(url).then(responseBody),
+    postForm: (url: string, data: FormData) => axios.post(url, data, {
+        headers: {'Content-type': 'multipart/form-data'}
+    }).then(responseBody),
+    putForm: (url: string, data: FormData) => axios.put(url, data, {
+        headers: {'Content-type': 'multipart/form-data'}
+    }).then(responseBody)
 }
 
 const Catalog = {
-  list: () => requests.get('products'),
-  details: (id: number) => requests.get(`products/${id}`),
-  fetchFilters: () => requests.get('products/filters')
+    list: (params: URLSearchParams) => requests.get('products', params),
+    details: (id: number) => requests.get(`products/${id}`),
+    fetchFilters: () => requests.get('products/filters')
 }
 
 const TestErrors = {
@@ -68,7 +74,7 @@ const TestErrors = {
 const Basket = {
     get: () => requests.get('basket'),
     addItem: (productId:number, quantity:number = 1) => requests.post(`basket?productId=${productId}&quantity=${quantity}`, { }),
-    removeItem: (productId:number, quantity:number = 1) => requests.delete(`basket?productId=${productId}&quantity=${quantity}`),
+    removeItem: (productId:number, quantity:number = 1) => requests.del(`basket?productId=${productId}&quantity=${quantity}`),
 
 
 }
